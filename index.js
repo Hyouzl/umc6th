@@ -1,25 +1,37 @@
 // const express = require('express')   // common JS
 import express from 'express'  // ES6
-import path from 'path';        
-import { fileURLToPath } from 'url';
+import { tempRouter } from './src/routes/temp.route.js';
+import { BaseError } from './config/error.js';
+import dbConfig from './config/sqlDB.js';
+import { response } from './config/response.js';
+
+
 
 // Use the path functions to get the directory name
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-
 const app = express()
 const port = 3000;
 
-import dbConfig from './config/sqlDB.js';
 
 var conn = dbConfig.init();
 
 dbConfig.connect(conn);
 
-app.get('/', function (req, res) {
-    res.send('Hello World')
-})
+// router setting
+app.use('/temp', tempRouter);
+
+// error handling
+app.use((req, res, next) => {
+    const err = new BaseError(status.NOT_FOUND);
+    next(err);
+});
+
+app.use((err, req, res, next) => {
+    // 템플릿 엔진 변수 설정
+    res.locals.message = err.message;   
+    // 개발환경이면 에러를 출력하고 아니면 출력하지 않기
+    res.locals.error = process.env.NODE_ENV !== 'production' ? err : {}; 
+    res.status(err.data.status).send(response(err.data));
+});
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
