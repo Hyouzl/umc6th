@@ -1,0 +1,2 @@
+export const insertMission = "INSERT INTO mission (store_id, reward, deadline, mission_spec, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(6), NOW(6));";
+export const insertMemberMission = "INSERT INTO member_mission (member_id, mission_id, status, created_at, updated_at) VALUES (?, ?, ?, NOW(6), NOW(6));";

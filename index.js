@@ -2,22 +2,33 @@
 import express from 'express'  // ES6
 import { tempRouter } from './src/routes/temp.route.js';
 import { BaseError } from './config/error.js';
-import dbConfig from './config/sqlDB.js';
 import { response } from './config/response.js';
-
+import dotenv from 'dotenv';
+import { specs } from './swagger/swagger.config.js';
+import SwaggerUi from 'swagger-ui-express';
+import { userRouter } from './src/routes/user.route.js';
+import { status } from './config/response.status.js';
+import { missionRouter } from './src/routes/mission.route.js';
+import YAML from 'yamljs';
 
 
 // Use the path functions to get the directory name
 const app = express()
 const port = 3000;
 
+dotenv.config();
 
-var conn = dbConfig.init();
+app.use(express.urlencoded({extended: false})); // 단순 객체 문자열 형태로 본문 데이터 해석
 
-dbConfig.connect(conn);
+const swaggerDocument = YAML.load('./swagger/swagger.yml');
+// swagger
+app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(swaggerDocument));
+
 
 // router setting
 app.use('/temp', tempRouter);
+app.use('/user', userRouter);
+app.use('/mission', missionRouter);
 
 // error handling
 app.use((req, res, next) => {
