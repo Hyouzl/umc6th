@@ -19,7 +19,7 @@ export const addUser = async (data) => {
         
         conn.release;
         return result[0].insertId;
-    }catch (err) {
+    } catch (err) {
         throw new BaseError(status.PARAMETER_IS_WRONG);
     }
 
@@ -75,9 +75,10 @@ export const getUserPreferToUserId = async (userID) => {
 export const addReview = async (reviewDto) => {
     try {
         const conn = await pool.getConnection();
-        const result = await pool.query(insertReview, [reviewDto.storeId, reviewDto.memberId, reviewDto.body, parseFloat(reviewDto.score)]);
+        const result = await pool.query(insertReview, [reviewDto.store_id, reviewDto.member_id, reviewDto.body, parseFloat(reviewDto.score)]);
         conn.release();
         return result;
+        
     } catch (err) {
         throw new BaseError(status.PARAMETER_IS_WRONG);
     }

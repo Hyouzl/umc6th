@@ -8,8 +8,8 @@ export const signinResponseDTO = (user, prefer) => {
 
 export const createReviewDTO  = (memberId, storeId, body, score) => {
     return {
-        "memberId": memberId,
-        "storeId": storeId,
+        "member_id": memberId,
+        "store_id": storeId,
         "body": body,
         "score": score,
     };

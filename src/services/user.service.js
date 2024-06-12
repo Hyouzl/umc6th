@@ -30,7 +30,7 @@ export const joinUser = async (body) => {
     
 }
 
-export const createNewReview = async (body) => {
+export const createNewReview = async(body) => {
 
     console.log(body);
 

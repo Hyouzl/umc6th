@@ -19,6 +19,11 @@ export const status = {
     EMAIL_ALEADY_EXIST: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "MEMBER4003", "message": "이미 존재하는 이메일입니다."},
 
     // article err
-    ARTICLE_NOT_FOUND: {status: StatusCodes.NOT_FOUND, "isSuccess": false, "code": "ARTICLE4001", "message": "게시글이 없습니다."}
+    ARTICLE_NOT_FOUND: {status: StatusCodes.NOT_FOUND, "isSuccess": false, "code": "ARTICLE4001", "message": "게시글이 없습니다."},
+
+    // store err
+    STORE_NOT_FOUND: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "STORE4001", "message": "해당하는 가게가 없습니다."},
+    STORE_MISSION_ALEADY_EXIST: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "STORE4002", "message": "이미 해당가게에 미션이 존재합니다."},
+    
 
 };
