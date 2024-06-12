@@ -1,9 +1,9 @@
 import { pool } from "../../config/db.config.js"
 import { BaseError } from "../../config/error.js";
 import { status } from "../../config/response.status.js";
-import { confirmEmail, connectFoodCategory, getUserID, insertReview, insertUserSql } from "./user.sql.js";
+import { confirmEmail, confirmMember, connectFoodCategory, insertReview, insertMemberSql, getMemberID, getPreferToMemberId } from "./member.sql.js";
 
-export const addUser = async (data) => {
+export const addMember = async (data) => {
 
     try{
         const conn = await pool.getConnection();
@@ -15,7 +15,7 @@ export const addUser = async (data) => {
             return -1;
         }
 
-        const result = await pool.query(insertUserSql, [data.email, data.name, data.gender, data.birth, data.addr, data.specAddr, data.phone]);
+        const result = await pool.query(insertMemberSql, [data.email, data.name, data.gender, data.birth, data.addr, data.specAddr, data.phone]);
         
         conn.release;
         return result[0].insertId;
@@ -25,10 +25,10 @@ export const addUser = async (data) => {
 
 }
 
-export const getUser = async (userId) => {
+export const getMember = async (memberId) => {
     try {
         const conn = await pool.getConnection();
-        cosnt [user] = await pool.query(getUserID, userId);
+        cosnt [user] = await pool.query(getMemberID, memberId);
 
         console.log(user);
 
@@ -58,10 +58,10 @@ export const setPrefer = async(userId, foodCategoryId) => {
     }
 }
 
-export const getUserPreferToUserId = async (userID) => {
+export const getUserPreferToUserId = async (memberID) => {
     try {
         const conn = await pool.getConnection();
-        const prefer = await pool.query(getPreferToUserID, userID);
+        const prefer = await pool.query(getPreferToMemberId, memberID);
 
         conn.release();
 
@@ -75,7 +75,15 @@ export const getUserPreferToUserId = async (userID) => {
 export const addReview = async (reviewDto) => {
     try {
         const conn = await pool.getConnection();
-        const result = await pool.query(insertReview, [reviewDto.store_id, reviewDto.member_id, reviewDto.body, parseFloat(reviewDto.score)]);
+
+        const [confirm1] = await pool.query(confirmMember, reviewDto.member_id);
+
+        if(!confirm1[0].isExistUser) {
+            conn.release();
+            return -1;
+        }
+
+        const result = await pool.query(insertReview, [reviewDto.member_id, reviewDto.store_id, reviewDto.review_body, parseFloat(reviewDto.rate)]);
         conn.release();
         return result;
         

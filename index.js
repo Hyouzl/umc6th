@@ -6,11 +6,11 @@ import { response } from './config/response.js';
 import dotenv from 'dotenv';
 import { specs } from './config/swagger.config.js';
 import SwaggerUi from 'swagger-ui-express';
-import { userRouter } from './src/routes/user.route.js';
+import { memberRouter } from './src/routes/member.route.js';
 import { status } from './config/response.status.js';
-import { missionRouter } from './src/routes/mission.route.js';
 import { storeRouter } from './src/routes/store.route.js';
 import cors from 'cors'
+import { missionRouter } from './src/routes/mission.route.js';
 
 // Use the path functions to get the directory name
 const app = express()
@@ -28,9 +28,11 @@ app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // router setting
 app.use('/temp', tempRouter);
-app.use('/user', userRouter);
+app.use('/user', memberRouter);
 // 가게에 미션 작성
 app.use('/store', storeRouter);
+app.use('/:storeId', storeRouter);
+app.use('/mission', missionRouter);
 
 // error handling
 app.use((req, res, next) => {

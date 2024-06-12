@@ -1,7 +1,7 @@
 import { pool } from "../../config/db.config.js"
 import { BaseError } from "../../config/error.js";
 import { status } from "../../config/response.status.js";
-import { insertMemberMission, insertMission, confirmStore, confirmMission, getMission } from "./mission.query.js";
+import { insertMemberMission, insertMission, confirmStore, getMission } from "./mission.query.js";
 
 export const addMission = async(missionDTO) => {
     try {
@@ -47,6 +47,7 @@ export const getStoreMission = async(missionId) => {
         const storeMission = await pool.query(getMission, missionId);
 
         console.log("response mission: ", storeMission);
+        
         if(storeMission.length === 0){
             return -1;
         }    
@@ -57,3 +58,4 @@ export const getStoreMission = async(missionId) => {
         throw new BaseError(status.PARAMETER_IS_WRONG);
     }
 }
+

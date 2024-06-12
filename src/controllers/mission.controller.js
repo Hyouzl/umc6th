@@ -13,3 +13,8 @@ export const newMemberMission = async(req, res, next) => {
     res.send(response(status.SUCCESS, await createMemberMission(req.body)));
 };
 
+export const MyMissionsPreview = async(req, res, next) => {
+    res.send(response(status.SUCCESS, await getMyMissions(req.body)));
+};
+
+
