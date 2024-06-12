@@ -1,1 +1,6 @@
 node_modules
+<<<<<<< HEAD
+=======
+.env
+npm-debug.log
+>>>>>>> 097c0103c9c8b13e1aefe15759cb6015b41e0522
