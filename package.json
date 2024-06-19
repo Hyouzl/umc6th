@@ -9,7 +9,7 @@
     "start:dev": "nodemon --exec babel-node index.js",
     "start:dist": "webpack --mode production & node ./dist/main.js",
     "start": "node main.js",
-    "build": "webpack --mode production"
+    "build": "webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
