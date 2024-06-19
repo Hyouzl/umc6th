@@ -1,0 +1,94 @@
+paths:
+  /store/review:
+    post:
+      tags:
+        - Store
+      summary: 가게 리뷰 작성
+      parameters:
+      - name: review
+        in: body
+        required: true
+        schema:
+          properties:
+            member_id:
+              type: bigint
+              description: 사용자 아이디
+              example: 1
+            store_id:
+              type: bigint
+              description: 가게 아이디
+              example: 1
+            rate:
+              type: float
+              description: 별점
+              example: 5
+            review_body:
+              type: String
+              description: 내용
+              example: 맛있어요
+      responses:
+        '200':
+          description: 가게 리뷰 작성 성공!
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              isSuccess:
+                type: boolean
+                example: true
+              code:
+                type: integer
+                example: 2000
+              message:
+                type: string
+                example: "success!"
+              data:
+                type: object
+                example: 
+                  result: 
+                    review: 
+                      - id: 1
+                        score: 5
+                        body: "맛있어요"
+                        created_at: null
+                        updated_at: null
+                        member_id: 1
+                        store_id: 1
+                
+        '400':
+          description: 잘못된 요청
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 400
+              isSuccess:
+                type: boolean
+                example: false
+              code:
+                type: integer
+                example: STORE4001
+              message:
+                type: string
+                example: 존재하지 않는 가게입니다.
+
+        '500':
+          description: 서버 에러
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              isSuccess:
+                type: boolean
+                example: false
+              code:
+                type: integer
+                example: COMMON000
+              message:
+                type: string
+                example: 서버 에러, 관리자에게 문의 바랍니다.
