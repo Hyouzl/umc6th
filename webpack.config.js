@@ -5,6 +5,7 @@ import nodeExternals from 'webpack-node-externals';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+
 export default {
   mode: 'development',
   context: path.resolve(__dirname, 'src'),
