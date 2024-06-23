@@ -7,7 +7,7 @@ const __dirname = dirname(__filename);
 
 
 export default {
-  mode: 'development',
+  mode: 'production',
   context: path.resolve(__dirname, 'src'),
   entry: {
     app: '../index.js',
@@ -15,6 +15,13 @@ export default {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
+    library: {
+        type: 'module', // ES 모듈로 출력
+      },
+     chunkFormat: 'module'
+  },
+  experiments: {
+    outputModule: true, // ES 모듈 출력을 활성화
   },
   module: {
     rules: [
@@ -24,6 +31,7 @@ export default {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-transform-modules-commonjs']
           },
         },
         exclude: /node_modules/,
