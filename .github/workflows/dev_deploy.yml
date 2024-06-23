@@ -43,12 +43,18 @@ jobs:
       # 배포 패키지 생성
       - name: Generate deployment package
         run: |
-          cp -R .platform dist
-          cp package.json dist/package.json
-          cp package-lock.json dist/package-lock.json
-          cp Procfile dist/Procfile
+          mkdir -p dist
+          echo "Copying .platform"
+          cp -R .platform dist && echo "Copied .platform"
+          echo "Copying package.json"
+          cp package.json dist/package.json && echo "Copied package.json"
+          echo "Copying package-lock.json"
+          cp package-lock.json dist/package-lock.json && echo "Copied package-lock.json"
+          echo "Copying Procfile"
+          cp Procfile dist/Procfile && echo "Copied Procfile"
           cd dist
-          zip -r deploy.zip .
+          echo "Creating deploy.zip"
+          zip -r deploy.zip . && echo "Created deploy.zip"
       
       # 생성한 deploy.zip 파일 내부 확인용!
       - name: Get Zip Inside
