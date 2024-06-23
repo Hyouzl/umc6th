@@ -87,6 +87,13 @@ jobs:
           deployment_package: dist/deploy.zip
           wait_for_deployment: false  # 바로 Beanstalk으로 넘어갈 수 있도록 함
 
+      - name: Upload to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACTION_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACTION_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp dist/deploy.zip s3://elasticbeanstalk-ap-northeast-2-369659136854/umc-dev-prod-node/ --region ap-northeast-2
+          echo "Upload completed"
       # 그냥 다 했다고 출력하기
       - name: Deployed!
         run: echo App deployed to ELB
