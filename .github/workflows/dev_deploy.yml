@@ -52,6 +52,8 @@ jobs:
           cp package-lock.json dist/package-lock.json
           echo "Copying Procfile"
           cp Procfile dist/Procfile
+          echo "Copying built files"
+          cp -R build/* dist/
           cd dist
           echo "Creating deploy.zip"
           zip -r deploy.zip .

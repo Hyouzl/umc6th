@@ -15,7 +15,7 @@ import { healthRoute } from './src/routes/health.route.js';
 
 // Use the path functions to get the directory name
 const app = express()
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 dotenv.config();
 
