@@ -40,28 +40,29 @@ jobs:
       - name: Run Build
         run: |
           npm run build
-          ls -l build  # 빌드 디렉토리 내용 출력
+          ls -l dist  # 빌드 디렉토리 내용 출력
+
       # 배포 패키지 생성
       - name: Generate deployment package
         run: |
-          mkdir -p dist
+          mkdir -p deployment
           echo "Copying .platform"
-          cp -R .platform dist 
+          cp -R .platform deployment 
           echo "Copying package.json"
-          cp package.json dist/package.json
+          cp package.json deployment/package.json
           echo "Copying package-lock.json"
-          cp package-lock.json dist/package-lock.json
+          cp package-lock.json deployment/package-lock.json
           echo "Copying Procfile"
-          cp Procfile dist/Procfile
+          cp Procfile deployment/Procfile
           echo "Copying built files"
-          cp -R build/* dist/
+          cp -R dist/* deployment/ 
           cd dist
           echo "Creating deploy.zip"
           zip -r deploy.zip .
       
       # 생성한 deploy.zip 파일 내부 확인용!
       - name: Get Zip Inside
-        run: zipinfo -1 dist/deploy.zip
+        run: zipinfo -1 deployment/deploy.zip
 
       # 현재 시간 얻기 (Build 시점의 시간 얻기)
       - name: Get current time
@@ -87,7 +88,7 @@ jobs:
           version_label: github-action-${{ steps.current-time.outputs.formattedTime }}  # version_label은 이전에 배포한 label과 중복되면 안됨!
           use_existing_version_if_available: true
           region: ap-northeast-2
-          deployment_package: dist/deploy.zip
+          deployment_package: deployment/deploy.zip
           wait_for_deployment: true  # 바로 Beanstalk으로 넘어갈 수 있도록 함
 
       # 그냥 다 했다고 출력하기
