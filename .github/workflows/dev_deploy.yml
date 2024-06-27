@@ -56,7 +56,7 @@ jobs:
           cp Procfile deployment/Procfile
           echo "Copying built files"
           cp -R dist/* deployment/ 
-          cd dist
+          cd deployment
           echo "Creating deploy.zip"
           zip -r deploy.zip .
       
