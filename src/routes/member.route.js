@@ -9,4 +9,3 @@ export const memberRouter = express.Router({mergeParams: true});
 memberRouter.post('/signin', asyncHandler(memberSignin));
 memberRouter.post('/mission', asyncHandler(newMemberMission));
 memberRouter.get('/reviews', asyncHandler(myReviews));
-memberRouter.get('/missions')
