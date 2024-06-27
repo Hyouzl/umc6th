@@ -57,11 +57,17 @@ jobs:
           cp package-lock.json deployment/package-lock.json
           echo "Copying Procfile"
           cp Procfile deployment/Procfile
+          echo "Copying .babelrc"
+          cp .babelrc deployment/.babelrc
           echo "Copying built files"
           cp -R dist/* deployment/ 
+          echo "Contents of deployment directory:"
+          ls -l deployment  # deployment 디렉토리 내용 출력
           cd deployment
           echo "Creating deploy.zip"
           zip -r deploy.zip .
+          echo "Contents of deployment directory after zipping:"
+          ls -l  # zip 파일이 생성되었는지 확인
       
       # 생성한 deploy.zip 파일 내부 확인용!
       - name: Get Zip Inside
